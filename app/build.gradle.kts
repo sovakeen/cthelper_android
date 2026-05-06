@@ -1,7 +1,12 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+//  navigation
     alias(libs.plugins.kotlin.serialization)
+//  ksp
+    id("com.google.devtools.ksp")
+//  hilt
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -51,8 +56,7 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.material3.adaptive.navigation.suite)
 
-
-//  Navigation
+//  navigation
     implementation(libs.navigation.compose)
     // Views/Fragments integration
     implementation(libs.navigation.fragment)
@@ -62,7 +66,13 @@ dependencies {
     // JSON serialization library, works with the Kotlin serialization plugin
     implementation(libs.kotlinx.serialization.json)
 
+//  ksp
+    ksp(libs.hilt.android.compiler)
 
+//  hilt
+    implementation(libs.hilt.android)
+
+//  tests?
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
