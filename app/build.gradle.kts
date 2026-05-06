@@ -71,6 +71,10 @@ dependencies {
 
 //  hilt
     implementation(libs.hilt.android)
+    implementation(libs.hilt.navigation.compose)
+
+//  viewmodel
+    implementation(libs.lifecycle.viewmodel)
 
 //  tests?
     testImplementation(libs.junit)

@@ -8,10 +8,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.example.cthelper.viewmodels.RegistrationViewModel
 
 @Composable
 fun RegistrationScreen(
-    navigateToLogin: () -> Unit
+    navigateToLogin: () -> Unit,
+    viewModel: RegistrationViewModel,
 ) {
     Scaffold(
         modifier = Modifier
@@ -23,6 +25,9 @@ fun RegistrationScreen(
         ) {
             Text(
                 text = "Registration Screen"
+            )
+            Text(
+                text = viewModel.sampleFun()
             )
             Button(
                 onClick = {
