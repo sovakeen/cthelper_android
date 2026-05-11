@@ -8,10 +8,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.cthelper.viewmodels.LoginViewModel
 
 @Composable
 fun LoginScreen(
-    navigateToRegistration: () -> Unit
+    navigateToRegistration: () -> Unit,
+    viewModel: LoginViewModel = hiltViewModel()
 ) {
     Scaffold(
         modifier = Modifier
@@ -24,6 +27,7 @@ fun LoginScreen(
             Text(
                 text = "Login Screen"
             )
+
             Button(
                 onClick = {
                     navigateToRegistration()
@@ -31,6 +35,19 @@ fun LoginScreen(
             ) {
                 Text(
                     text = "To Registration"
+                )
+            }
+
+            Button(
+                onClick = {
+                    viewModel.login(
+                        email = "student1@student1.com",
+                        password = "111111"
+                    )
+                }
+            ) {
+                Text(
+                    text = "Emulate login"
                 )
             }
         }

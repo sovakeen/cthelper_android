@@ -76,6 +76,15 @@ dependencies {
 //  viewmodel
     implementation(libs.lifecycle.viewmodel)
 
+//  network
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.kotlinx.serialization)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging.interceptor)
+
+//  security
+    implementation(libs.androidx.security.crypto)
+
 //  tests?
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

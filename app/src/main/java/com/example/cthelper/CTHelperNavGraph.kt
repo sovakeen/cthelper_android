@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.cthelper.ui.screens.LoginScreen
 import com.example.cthelper.ui.screens.RegistrationScreen
+import com.example.cthelper.viewmodels.LoginViewModel
 import com.example.cthelper.viewmodels.RegistrationViewModel
 
 @Composable
@@ -30,7 +31,10 @@ fun CTHelperNavHost(
             )
         }
         composable(route = AppDestinations.LOGIN.label) {
+            val viewModel: LoginViewModel = hiltViewModel()
+
             LoginScreen(
+                viewModel = viewModel,
                 navigateToRegistration = { navController.navigate(AppDestinations.REGISTRATION.label) }
             )
         }
