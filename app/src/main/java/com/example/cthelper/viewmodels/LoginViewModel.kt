@@ -7,18 +7,17 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
-data class RegistrationUiState(
+data class LoginUiState(
     val email: String = "",
     val password: String = "",
-    val confirmPassword: String = "",
     val isLoading: Boolean = false,
     val error: String? = null
 )
 
 @HiltViewModel
-class RegistrationViewModel @Inject constructor() : ViewModel() {
-    private val _uiState = MutableStateFlow(RegistrationUiState())
-    val uiState: StateFlow<RegistrationUiState> = _uiState.asStateFlow()
+class LoginViewModel @Inject constructor() : ViewModel() {
+    private val _uiState = MutableStateFlow(LoginUiState())
+    val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
 
     fun onEmailChange(email: String) {
         _uiState.value = _uiState.value.copy(email = email)
@@ -28,11 +27,7 @@ class RegistrationViewModel @Inject constructor() : ViewModel() {
         _uiState.value = _uiState.value.copy(password = password)
     }
 
-    fun onConfirmPasswordChange(password: String) {
-        _uiState.value = _uiState.value.copy(confirmPassword = password)
-    }
-
-    fun register() {
-        // Implementation for registration
+    fun login() {
+        // Implementation for login
     }
 }

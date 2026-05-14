@@ -2,19 +2,21 @@ package com.example.cthelper
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.cthelper.ui.screens.LoginScreen
-import com.example.cthelper.ui.screens.RegistrationScreen
-import com.example.cthelper.viewmodels.RegistrationViewModel
+import androidx.navigation.navArgument
+import com.example.cthelper.ui.auth.LoginScreen
+import com.example.cthelper.ui.auth.RegistrationScreen
+import com.example.cthelper.ui.tests.TestSolvingScreen
+import com.example.cthelper.ui.tests.TestsManagementScreen
 
 @Composable
 fun CTHelperNavHost(
-    navController: NavHostController = rememberNavController(),
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavHostController = rememberNavController()
 ) {
     NavHost(
         navController = navController,
@@ -22,16 +24,34 @@ fun CTHelperNavHost(
         modifier = modifier
     ) {
         composable(route = AppDestinations.REGISTRATION.label) {
-            val viewModel: RegistrationViewModel = hiltViewModel()
-
             RegistrationScreen(
-                navigateToLogin = { navController.navigate(AppDestinations.LOGIN.label) },
-                viewModel = viewModel,
+                navigateToLogin = { navController.navigate(AppDestinations.LOGIN.label) }
             )
         }
+
         composable(route = AppDestinations.LOGIN.label) {
             LoginScreen(
-                navigateToRegistration = { navController.navigate(AppDestinations.REGISTRATION.label) }
+                navigateToRegistration = { navController.navigate(AppDestinations.REGISTRATION.label) },
+                navigateToTests = { navController.navigate(AppDestinations.TESTS_MANAGEMENT.label) }
+            )
+        }
+
+        composable(route = AppDestinations.TESTS_MANAGEMENT.label) {
+            TestsManagementScreen(
+                onNavigateToTestSolving = { testId ->
+                    navController.navigate("${AppDestinations.TEST_SOLVING.label}/$testId")
+                }
+            )
+        }
+
+        composable(
+            route = "${AppDestinations.TEST_SOLVING.label}/{testId}",
+            arguments = listOf(
+                navArgument("testId") { type = NavType.LongType }
+            )
+        ) {
+            TestSolvingScreen(
+                onNavigateBack = { navController.popBackStack() }
             )
         }
     }
@@ -39,8 +59,9 @@ fun CTHelperNavHost(
 
 enum class AppDestinations(
     val label: String,
-//    val icon: Int,
 ) {
     REGISTRATION("Registration"),
     LOGIN("Login"),
+    TESTS_MANAGEMENT("TestsManagement"),
+    TEST_SOLVING("TestSolving")
 }
