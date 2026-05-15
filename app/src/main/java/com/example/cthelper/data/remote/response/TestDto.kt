@@ -1,4 +1,4 @@
-package com.example.cthelper.data.local.dto
+package com.example.cthelper.data.remote.response
 
 import com.example.cthelper.data.local.models.Difficulty
 import com.example.cthelper.data.local.models.Test
@@ -15,6 +15,6 @@ data class TestDto(
         testName = testName,
         authorName = authorName,
         problemCount = problemCount,
-        avgDifficulty = Difficulty.fromInt(avgDifficulty)
+        avgDifficulty = Difficulty.Companion.fromInt(avgDifficulty)
     )
 }

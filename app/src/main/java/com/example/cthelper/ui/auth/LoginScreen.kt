@@ -59,9 +59,15 @@ fun LoginScreen(
             )
             Spacer(modifier = Modifier.height(16.dp))
             Button(
-                onClick = { navigateToTests() }
+                onClick = { viewModel.login() }
             ) {
                 Text(text = "Log in")
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            Button(
+                onClick = { navigateToTests() }
+            ) {
+                Text(text = "Navigate to Tests")
             }
             Spacer(modifier = Modifier.height(8.dp))
             Button(

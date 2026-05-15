@@ -1,10 +1,10 @@
-package com.example.cthelper.data.local.dto
+package com.example.cthelper.data.remote.response
 
 import com.example.cthelper.data.local.models.Difficulty
 import com.example.cthelper.data.local.models.ProblemType
 import com.example.cthelper.data.local.models.ProblemVersion
 
-data class ProblemVersionDto(
+data class ProblemVersionResponse(
     val problemId: Int,
     val code: String,
     val type: Int,
