@@ -21,7 +21,7 @@ class LoginViewModel @Inject constructor(
                  LoginRequest(
                      email = email,
                      password = password,
-                     clientType = 0,
+                     clientType = 1,
                      ipAddress = "192.168.0.1",
                      deviceInfo = "{}",
                      deviceId = "test"
