@@ -1,4 +1,4 @@
-package com.example.cthelper.data.local
+package com.example.cthelper
 
 import android.content.Context
 import android.content.SharedPreferences

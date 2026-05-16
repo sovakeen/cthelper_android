@@ -1,4 +1,4 @@
-package com.example.cthelper.data.local.models
+package com.example.cthelper.domain.model
 
 data class Test(
     val testId: Int,

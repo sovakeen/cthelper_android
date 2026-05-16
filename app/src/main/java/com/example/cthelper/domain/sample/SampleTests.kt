@@ -1,4 +1,4 @@
-package com.example.cthelper.data.local.sample
+package com.example.cthelper.domain.sample
 
 /**
  * Sample test data extracted from seed_tests.sql

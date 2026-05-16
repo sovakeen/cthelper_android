@@ -1,8 +1,8 @@
-package com.example.cthelper.data.remote.response
+package com.example.cthelper.remote.response
 
-import com.example.cthelper.data.local.models.Difficulty
-import com.example.cthelper.data.local.models.ProblemType
-import com.example.cthelper.data.local.models.ProblemVersion
+import com.example.cthelper.domain.model.Difficulty
+import com.example.cthelper.domain.model.ProblemType
+import com.example.cthelper.domain.model.ProblemVersion
 
 data class ProblemVersionResponse(
     val problemId: Int,

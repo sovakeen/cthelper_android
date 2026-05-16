@@ -22,12 +22,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.cthelper.viewmodels.TestSolvingViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TestSolvingScreen(
-    onNavigateBack: () -> Unit,
+    navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: TestSolvingViewModel = hiltViewModel()
 ) {
@@ -91,7 +90,7 @@ fun TestSolvingScreen(
                     }
                     
                     if (currentProblemIndex == test.problemCount - 1) {
-                        Button(onClick = onNavigateBack) {
+                        Button(onClick = navigateBack) {
                             Text(text = "Finish Test")
                         }
                     }

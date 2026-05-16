@@ -1,10 +1,11 @@
-package com.example.cthelper.viewmodels
+package com.example.cthelper.ui.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cthelper.data.local.TokenManager
-import com.example.cthelper.data.remote.AuthService
-import com.example.cthelper.data.remote.request.LoginRequest
+import com.example.cthelper.TokenManager
+import com.example.cthelper.remote.api.AuthApiService
+import com.example.cthelper.remote.repository.AuthRepositoryImpl
+import com.example.cthelper.remote.request.LoginRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,8 +22,7 @@ data class LoginUiState(
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    val authService: AuthService,
-    val tokenManager: TokenManager
+    val authRepositoryImpl: AuthRepositoryImpl
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
@@ -37,22 +37,10 @@ class LoginViewModel @Inject constructor(
 
     fun login() {
         viewModelScope.launch {
-            val response = authService.login(
-                LoginRequest(
-                    email = _uiState.value.email,
-                    password = _uiState.value.password,
-                    clientType = 1,
-                    ipAddress = "192.168.0.1",
-                    deviceInfo = "{}",
-                    deviceId = "string"
-                )
+            authRepositoryImpl.login(
+                email = _uiState.value.email,
+                password = _uiState.value.password
             )
-            if (response.isSuccessful) {
-                response.body()?.let {
-                    print("accessToken: ${it.accessToken}")
-                    tokenManager.saveAccessToken(it.accessToken)
-                }
-            }
         }
     }
 }

@@ -1,9 +1,9 @@
-package com.example.cthelper.viewmodels
+package com.example.cthelper.ui.tests
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.example.cthelper.data.local.sample.SampleTestsData
-import com.example.cthelper.data.local.sample.TestData
+import com.example.cthelper.domain.sample.SampleTestsData
+import com.example.cthelper.domain.sample.TestData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

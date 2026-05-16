@@ -20,7 +20,7 @@ fun CTHelperNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = AppDestinations.REGISTRATION.label,
+        startDestination = AppDestinations.LOGIN.label,
         modifier = modifier
     ) {
         composable(route = AppDestinations.REGISTRATION.label) {
@@ -38,7 +38,7 @@ fun CTHelperNavHost(
 
         composable(route = AppDestinations.TESTS_MANAGEMENT.label) {
             TestsManagementScreen(
-                onNavigateToTestSolving = { testId ->
+                navigateToTestSolving = { testId ->
                     navController.navigate("${AppDestinations.TEST_SOLVING.label}/$testId")
                 }
             )
@@ -51,7 +51,7 @@ fun CTHelperNavHost(
             )
         ) {
             TestSolvingScreen(
-                onNavigateBack = { navController.popBackStack() }
+                navigateBack = { navController.popBackStack() }
             )
         }
     }

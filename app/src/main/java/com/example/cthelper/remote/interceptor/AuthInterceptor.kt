@@ -1,6 +1,6 @@
-package com.example.cthelper.data.remote
+package com.example.cthelper.remote.interceptor
 
-import com.example.cthelper.data.local.TokenManager
+import com.example.cthelper.TokenManager
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject

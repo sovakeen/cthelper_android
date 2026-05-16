@@ -24,13 +24,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.cthelper.data.local.sample.TestData
-import com.example.cthelper.viewmodels.TestsManagementViewModel
+import com.example.cthelper.domain.sample.TestData
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TestsManagementScreen(
-    onNavigateToTestSolving: (Long) -> Unit,
+    navigateToTestSolving: (Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: TestsManagementViewModel = hiltViewModel()
 ) {
@@ -66,7 +65,7 @@ fun TestsManagementScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 4.dp)
-                                .clickable { onNavigateToTestSolving(item.testId) }
+                                .clickable { navigateToTestSolving(item.testId) }
                         )
                     }
                 }

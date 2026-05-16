@@ -1,12 +1,12 @@
-package com.example.cthelper.data.remote
+package com.example.cthelper.remote.api
 
-import com.example.cthelper.data.remote.request.LoginRequest
-import com.example.cthelper.data.remote.response.LoginResponse
+import com.example.cthelper.remote.request.LoginRequest
+import com.example.cthelper.remote.response.LoginResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-interface AuthService {
+interface AuthApiService {
     @POST("auth/login")
     suspend fun login(
         @Body request: LoginRequest

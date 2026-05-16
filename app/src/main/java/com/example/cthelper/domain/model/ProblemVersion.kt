@@ -1,4 +1,4 @@
-package com.example.cthelper.data.local.models
+package com.example.cthelper.domain.model
 
 enum class ProblemType(val value: Int) {
     SINGLE_CHOICE(1),

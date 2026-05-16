@@ -1,7 +1,7 @@
-package com.example.cthelper.data.di
+package com.example.cthelper.di.network
 
-import com.example.cthelper.data.remote.AuthInterceptor
-import com.example.cthelper.data.remote.AuthService
+import com.example.cthelper.remote.api.AuthApiService
+import com.example.cthelper.remote.interceptor.AuthInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,7 +16,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object NetworkModule {
+object BaseNetworkModule {
 
     private const val BASE_URL = "http://localhost:5003/"
 
@@ -51,11 +51,5 @@ object NetworkModule {
             .client(okHttpClient)
             .addConverterFactory(json.asConverterFactory(contentType))
             .build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideAuthService(retrofit: Retrofit): AuthService {
-        return retrofit.create(AuthService::class.java)
     }
 }

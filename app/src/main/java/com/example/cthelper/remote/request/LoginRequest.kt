@@ -1,4 +1,4 @@
-package com.example.cthelper.data.remote.request
+package com.example.cthelper.remote.request
 
 import kotlinx.serialization.Serializable
 
