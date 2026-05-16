@@ -22,7 +22,7 @@ class TestSearchRepositoryImpl @Inject constructor(
             }
         }
         else {
-            emptyList()
+            null
         }
     }
 }

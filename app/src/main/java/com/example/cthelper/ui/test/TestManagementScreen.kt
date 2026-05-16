@@ -1,4 +1,4 @@
-package com.example.cthelper.ui.tests
+package com.example.cthelper.ui.test
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
@@ -24,14 +24,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.cthelper.domain.sample.TestData
+import com.example.cthelper.domain.model.Test
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TestsManagementScreen(
     navigateToTestSolving: (Long) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: TestsManagementViewModel = hiltViewModel()
+    viewModel: TestManagementViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -44,31 +44,29 @@ fun TestsManagementScreen(
         modifier = modifier.fillMaxSize()
     ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding).fillMaxSize()) {
-            if (uiState.isLoading) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            } else if (uiState.error != null) {
-                Text(
-                    text = uiState.error!!,
-                    color = Color.Red,
-                    modifier = Modifier.align(Alignment.Center)
-                )
-            } else {
-                LazyColumn(
+            when (uiState) {
+                is TestManagementUiState.Success -> LazyColumn(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
                         .padding(10.dp)
                         .fillMaxSize()
                 ) {
-                    items(uiState.tests) { item ->
+                    items((uiState as TestManagementUiState.Success).tests) { item ->
                         TestCard(
                             test = item,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 4.dp)
-                                .clickable { navigateToTestSolving(item.testId) }
+//                                .clickable { navigateToTestSolving(item.testId) }
                         )
                     }
                 }
+                is TestManagementUiState.Loading -> CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                is TestManagementUiState.Error -> Text(
+                    text = (uiState as TestManagementUiState.Error).msg,
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                )
             }
         }
     }
@@ -76,7 +74,7 @@ fun TestsManagementScreen(
 
 @Composable
 fun TestCard(
-    test: TestData,
+    test: Test,
     modifier: Modifier = Modifier
 ) {
     Column(
