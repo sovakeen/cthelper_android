@@ -4,6 +4,6 @@ data class Test(
     val testId: Int,
     val testName: String,
     val authorName: String,
-    val problemCount: Int,
+    val questionCount: Int,
     val avgDifficulty: Difficulty
 )

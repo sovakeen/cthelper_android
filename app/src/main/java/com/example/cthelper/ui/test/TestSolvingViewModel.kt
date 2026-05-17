@@ -2,31 +2,32 @@
 //
 //import androidx.lifecycle.SavedStateHandle
 //import androidx.lifecycle.ViewModel
-//import com.example.cthelper.domain.sample.SampleTestsData
-//import com.example.cthelper.domain.sample.TestData
+//import com.example.cthelper.domain.model.Test
 //import dagger.hilt.android.lifecycle.HiltViewModel
 //import kotlinx.coroutines.flow.MutableStateFlow
 //import kotlinx.coroutines.flow.StateFlow
 //import kotlinx.coroutines.flow.asStateFlow
 //import javax.inject.Inject
 //
-//data class TestSolvingUiState(
-//    val test: TestData? = null,
-//    val isLoading: Boolean = false,
-//    val error: String? = null,
-//    val currentProblemIndex: Int = 0,
-//    val answers: Map<Long, String> = emptyMap()
-//)
+//sealed interface TestSolvingUiState {
+//    data class Success(
+//        val prikol: Int
+//    ): TestSolvingUiState
+//    object Loading: TestSolvingUiState
+//    data class Error(
+//        val msg: String
+//    ): TestSolvingUiState
+//}
 //
 //@HiltViewModel
 //class TestSolvingViewModel @Inject constructor(
 //    savedStateHandle: SavedStateHandle
 //) : ViewModel() {
-//    private val _uiState = MutableStateFlow(TestSolvingUiState())
+//    private val _uiState = MutableStateFlow<TestSolvingUiState>(TestSolvingUiState.Loading)
 //    val uiState: StateFlow<TestSolvingUiState> = _uiState.asStateFlow()
 //
 //    init {
-//        val testId: Long? = savedStateHandle.get<Long>("testId")
+//        val testId: Int? = savedStateHandle.get<Int>("testId")
 //        testId?.let { loadTest(it) }
 //    }
 //

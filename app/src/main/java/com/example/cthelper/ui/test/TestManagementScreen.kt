@@ -29,7 +29,7 @@ import com.example.cthelper.domain.model.Test
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TestsManagementScreen(
-    navigateToTestSolving: (Long) -> Unit,
+    navigateToTestSolving: (Int) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: TestManagementViewModel = hiltViewModel()
 ) {
@@ -56,14 +56,14 @@ fun TestsManagementScreen(
                             test = item,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = 4.dp)
-//                                .clickable { navigateToTestSolving(item.testId) }
+                                .padding(vertical = 4.dp),
+                            onClick = navigateToTestSolving
                         )
                     }
                 }
                 is TestManagementUiState.Loading -> CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                 is TestManagementUiState.Error -> Text(
-                    text = (uiState as TestManagementUiState.Error).msg,
+                    text = "The following error occurred:\n${(uiState as TestManagementUiState.Error).msg}",
                     modifier = Modifier
                         .align(Alignment.Center)
                 )
@@ -75,12 +75,14 @@ fun TestsManagementScreen(
 @Composable
 fun TestCard(
     test: Test,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: (Int) -> Unit = {  },
 ) {
     Column(
         modifier = modifier
             .border(BorderStroke(1.dp, Color.Gray), MaterialTheme.shapes.small)
             .padding(16.dp)
+            .clickable { onClick(test.testId) }
     ) {
         Text(text = test.testName, style = MaterialTheme.typography.titleMedium)
         Text(text = "Author: ${test.authorName}", style = MaterialTheme.typography.bodyMedium)

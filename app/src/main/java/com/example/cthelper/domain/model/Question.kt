@@ -1,13 +1,13 @@
 package com.example.cthelper.domain.model
 
-enum class ProblemType(val value: Int) {
+enum class QuestionType(val value: Int) {
     SINGLE_CHOICE(1),
     MULTIPLE_CHOICE(2),
     OPEN_ENDED(3);
 
     companion object {
-        private val map = entries.associateBy(ProblemType::value)
-        fun fromInt(type: Int): ProblemType = map[type]!!
+        private val map = entries.associateBy(QuestionType::value)
+        fun fromInt(type: Int): QuestionType = map[type]!!
     }
 }
 
@@ -24,10 +24,10 @@ enum class Difficulty(val value: Int) {
     }
 }
 
-data class ProblemVersion(
-    val problemId: Int,
+data class Question(
+    val questionId: Int,
     val code: String,
-    val type: ProblemType,
+    val type: QuestionType,
     val difficulty: Difficulty,
     val statement: String,
     val answer: String,

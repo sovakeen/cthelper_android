@@ -1,11 +1,11 @@
 package com.example.cthelper.remote.response
 
 import com.example.cthelper.domain.model.Difficulty
-import com.example.cthelper.domain.model.ProblemType
-import com.example.cthelper.domain.model.ProblemVersion
+import com.example.cthelper.domain.model.QuestionType
+import com.example.cthelper.domain.model.Question
 
-data class ProblemVersionResponse(
-    val problemId: Int,
+data class QuestionResponse(
+    val questionId: Int,
     val code: String,
     val type: Int,
     val difficulty: Int,
@@ -13,10 +13,10 @@ data class ProblemVersionResponse(
     val answer: String,
     val explanation: String
 ) {
-    fun toProblemVersion(): ProblemVersion = ProblemVersion(
-        problemId = problemId,
+    fun toQuestion(): Question = Question(
+        questionId = questionId,
         code = code,
-        type = ProblemType.fromInt(type),
+        type = QuestionType.fromInt(type),
         difficulty = Difficulty.fromInt(type),
         statement = statement,
         answer = answer,

@@ -1,7 +1,7 @@
 package com.example.cthelper.di.network
 
 import com.example.cthelper.remote.api.AuthApiService
-import com.example.cthelper.remote.api.TestSearchApiService
+import com.example.cthelper.remote.api.TestManagementApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -11,7 +11,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object NetworkServicesModule {
+object ServicesNetworkModule {
     @Provides
     @Singleton
     fun provideAuthApiService(retrofit: Retrofit): AuthApiService {
@@ -20,7 +20,7 @@ object NetworkServicesModule {
 
     @Provides
     @Singleton
-    fun provideTestSearchApiService(retrofit: Retrofit): TestSearchApiService {
-        return retrofit.create(TestSearchApiService::class.java)
+    fun provideTestManagementApiService(retrofit: Retrofit): TestManagementApiService {
+        return retrofit.create(TestManagementApiService::class.java)
     }
 }

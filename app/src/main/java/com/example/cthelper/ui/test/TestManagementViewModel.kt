@@ -3,7 +3,7 @@ package com.example.cthelper.ui.test
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cthelper.domain.model.Test
-import com.example.cthelper.remote.repository.TestSearchRepositoryImpl
+import com.example.cthelper.remote.repository.TestManagementRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,7 +25,7 @@ sealed interface TestManagementUiState {
 
 @HiltViewModel
 class TestManagementViewModel @Inject constructor(
-    val testSearchRepositoryImpl: TestSearchRepositoryImpl
+    val testManagementRepositoryImpl: TestManagementRepositoryImpl
 ) : ViewModel() {
     private var _uiState = MutableStateFlow<TestManagementUiState>(TestManagementUiState.Loading)
     val uiState: StateFlow<TestManagementUiState> = _uiState.asStateFlow()
@@ -37,7 +37,7 @@ class TestManagementViewModel @Inject constructor(
     fun loadTests() {
         viewModelScope.launch {
             _uiState.value = try {
-                TestManagementUiState.Success(testSearchRepositoryImpl.getTests() ?: emptyList())
+                TestManagementUiState.Success(testManagementRepositoryImpl.getTests() ?: emptyList())
             } catch (e: Exception) {
                 TestManagementUiState.Error(e.message ?: "no_error_msg")
             }

@@ -20,14 +20,14 @@ data class TestItem(
     @SerialName("testId") val testId: Int,
     @SerialName("testName") val testName: String,
     @SerialName("authorName") val authorName: String,
-    @SerialName("problemCount") val problemCount: Int,
+    @SerialName("problemCount") val questionCount: Int,
     @SerialName("avgDifficult") val avgDifficult: Int
 ){
     fun toTest(): Test = Test(
         testId = testId,
         testName = testName,
         authorName = authorName,
-        problemCount = problemCount,
+        questionCount = questionCount,
         avgDifficulty = Difficulty.fromInt(avgDifficult)
     )
 }

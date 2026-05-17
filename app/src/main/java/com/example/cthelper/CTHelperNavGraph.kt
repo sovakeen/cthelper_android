@@ -32,11 +32,11 @@ fun CTHelperNavHost(
         composable(route = AppDestinations.LOGIN.label) {
             LoginScreen(
                 navigateToRegistration = { navController.navigate(AppDestinations.REGISTRATION.label) },
-                navigateToTests = { navController.navigate(AppDestinations.TESTS_MANAGEMENT.label) }
+                navigateToTests = { navController.navigate(AppDestinations.TEST_MANAGEMENT.label) }
             )
         }
 
-        composable(route = AppDestinations.TESTS_MANAGEMENT.label) {
+        composable(route = AppDestinations.TEST_MANAGEMENT.label) {
             TestsManagementScreen(
                 navigateToTestSolving = { testId ->
                     navController.navigate("${AppDestinations.TEST_SOLVING.label}/$testId")
@@ -47,7 +47,7 @@ fun CTHelperNavHost(
         composable(
             route = "${AppDestinations.TEST_SOLVING.label}/{testId}",
             arguments = listOf(
-                navArgument("testId") { type = NavType.LongType }
+                navArgument("testId") { type = NavType.IntType }
             )
         ) {
             TestSolvingScreen(
@@ -62,6 +62,6 @@ enum class AppDestinations(
 ) {
     REGISTRATION("Registration"),
     LOGIN("Login"),
-    TESTS_MANAGEMENT("TestsManagement"),
+    TEST_MANAGEMENT("TestManagement"),
     TEST_SOLVING("TestSolving")
 }

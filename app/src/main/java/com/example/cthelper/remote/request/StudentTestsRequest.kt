@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class TestSearchRequest(
+data class StudentTestsRequest(
     @SerialName("page") val page: Int = 0,
     @SerialName("pageSize") val pageSize: Int = 0,
     @SerialName("nameFragment") val nameFragment: String? = null,
