@@ -1,4 +1,4 @@
-package com.example.cthelper.remote.repository
+package com.example.cthelper.remote.repositoryImpl
 
 import com.example.cthelper.TokenManager
 import com.example.cthelper.domain.repository.AuthRepository

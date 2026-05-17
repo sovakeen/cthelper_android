@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class TestSearchResponse(
-    @SerialName("items") val items: List<TestItem>,
+    @SerialName("items") val tests: List<TestItem>,
     @SerialName("totalPagesCount") val totalPagesCount: Int,
     @SerialName("page") val page: Int,
     @SerialName("pageSize") val pageSize: Int,

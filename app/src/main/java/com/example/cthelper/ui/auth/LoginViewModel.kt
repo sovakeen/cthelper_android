@@ -2,10 +2,7 @@ package com.example.cthelper.ui.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cthelper.TokenManager
-import com.example.cthelper.remote.api.AuthApiService
-import com.example.cthelper.remote.repository.AuthRepositoryImpl
-import com.example.cthelper.remote.request.LoginRequest
+import com.example.cthelper.remote.repositoryImpl.AuthRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

@@ -4,6 +4,6 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class LoginResponse(
-    @SerialName("accessToken") val accessToken: String
+data class CompleteAttemptResponse(
+    @SerialName("attemptId") val attemptId: Int
 )
