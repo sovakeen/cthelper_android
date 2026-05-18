@@ -8,10 +8,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.cthelper.ui.auth.LoginScreen
-import com.example.cthelper.ui.auth.RegistrationScreen
-import com.example.cthelper.ui.test.TestSolvingScreen
-import com.example.cthelper.ui.test.TestsManagementScreen
+import com.example.cthelper.ui.LoginScreen
+import com.example.cthelper.ui.RegistrationScreen
+import com.example.cthelper.ui.TestSolvingScreen
+import com.example.cthelper.ui.TestsManagementScreen
 
 @Composable
 fun CTHelperNavHost(
