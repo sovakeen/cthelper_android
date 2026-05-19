@@ -1,4 +1,4 @@
-package com.example.cthelper.util
+package com.example.cthelper.interceptor
 
 import com.example.cthelper.util.TokenManager
 import okhttp3.Interceptor

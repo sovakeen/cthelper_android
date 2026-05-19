@@ -1,6 +1,7 @@
 package com.example.cthelper.di
 
-import com.example.cthelper.util.AuthInterceptor
+import com.example.cthelper.interceptor.AuthInterceptor
+import com.example.cthelper.interceptor.CookieInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,7 +30,8 @@ object BaseNetworkModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(
-        authInterceptor: AuthInterceptor
+        authInterceptor: AuthInterceptor,
+        cookieInterceptor: CookieInterceptor
     ): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
@@ -38,6 +40,7 @@ object BaseNetworkModule {
         return OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .addInterceptor(authInterceptor)
+            .addInterceptor(cookieInterceptor)
             .build()
     }
 
