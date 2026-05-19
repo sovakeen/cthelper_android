@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.cthelper.ui.LoginScreen
+import com.example.cthelper.ui.QRScreen
 import com.example.cthelper.ui.RegistrationScreen
 import com.example.cthelper.ui.TestSolvingScreen
 import com.example.cthelper.ui.TestsManagementScreen
@@ -32,7 +33,8 @@ fun CTHelperNavHost(
         composable(route = AppDestinations.LOGIN.label) {
             LoginScreen(
                 navigateToRegistration = { navController.navigate(AppDestinations.REGISTRATION.label) },
-                navigateToTests = { navController.navigate(AppDestinations.TEST_MANAGEMENT.label) }
+                navigateToTests = { navController.navigate(AppDestinations.TEST_MANAGEMENT.label) },
+                navigateToQR = { navController.navigate(AppDestinations.QR_CODE.label) }
             )
         }
 
@@ -42,6 +44,11 @@ fun CTHelperNavHost(
                     navController.navigate("${AppDestinations.TEST_SOLVING.label}/$testId")
                 }
             )
+        }
+
+        @OptIn(androidx.camera.core.ExperimentalGetImage::class)
+        composable(route = AppDestinations.QR_CODE.label) {
+            QRScreen()
         }
 
         composable(
@@ -63,5 +70,6 @@ enum class AppDestinations(
     REGISTRATION("Registration"),
     LOGIN("Login"),
     TEST_MANAGEMENT("TestManagement"),
-    TEST_SOLVING("TestSolving")
+    TEST_SOLVING("TestSolving"),
+    QR_CODE("QRCode")
 }

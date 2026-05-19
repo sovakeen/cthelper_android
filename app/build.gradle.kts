@@ -82,6 +82,18 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging.interceptor)
 
+//  camera
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.view)
+
+//  barcode
+    implementation(libs.google.mlkit.barcode.scanning)
+    implementation(libs.zxing.core)
+
+//  accompanist
+    implementation(libs.accompanist.permissions)
+
 //  tests?
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

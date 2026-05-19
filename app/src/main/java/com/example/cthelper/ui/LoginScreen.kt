@@ -20,12 +20,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cthelper.viewmodel.LoginViewModel
+import com.example.cthelper.AppDestinations
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
     navigateToRegistration: () -> Unit,
     navigateToTests: () -> Unit,
+    navigateToQR: () -> Unit,
     viewModel: LoginViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -68,6 +70,12 @@ fun LoginScreen(
                 onClick = { navigateToTests() }
             ) {
                 Text(text = "Navigate to Tests")
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            Button(
+                onClick = navigateToQR
+            ) {
+                Text(text = "Go to QR Screen")
             }
             Spacer(modifier = Modifier.height(8.dp))
             Button(
