@@ -11,8 +11,8 @@ data class QuestionInstance(
     @SerialName("code") val code: String,
     @SerialName("type") val type: QuestionType,
     @SerialName("statement") val statement: String,
-    @SerialName("answer") val answer: String? = null,
-    @SerialName("explanation") val explanation: String? = null
+//    @SerialName("answer") val answer: String? = null,
+//    @SerialName("explanation") val explanation: String? = null,
 ) {
     fun toUserAnswer(): UserAnswer = UserAnswer(
         questionInstanceId = questionInstanceId,

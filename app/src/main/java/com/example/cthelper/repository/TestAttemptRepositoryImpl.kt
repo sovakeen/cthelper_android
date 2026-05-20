@@ -6,12 +6,38 @@ import com.example.cthelper.api.TestAttemptApiService
 import com.example.cthelper.dto.testattempt.CompleteAttemptResponse
 import com.example.cthelper.dto.testattempt.ResumeAttemptResponse
 import com.example.cthelper.dto.testattempt.StartAttemptResponse
+import com.example.cthelper.dto.testattempt.StudentAttemptsResponse
+import com.example.cthelper.model.TestAttempt
 import retrofit2.HttpException
 import javax.inject.Inject
 
 class TestAttemptRepositoryImpl @Inject constructor(
     private val testAttemptApiService: TestAttemptApiService
 ): TestAttemptRepository {
+    override suspend fun getAttempts(): StudentAttemptsResponse {
+        val response = testAttemptApiService.getAttempts()
+        if (response.isSuccessful) {
+            val body = response.body()
+                ?: throw IllegalStateException("Successful response had no body")
+            print(body)
+            return body
+        }
+        else { throw HttpException(response)
+        }
+    }
+
+    override suspend fun getAttemptDetails(attemptId: Int): TestAttempt {
+        val response = testAttemptApiService.getAttemptDetails(attemptId)
+        if (response.isSuccessful) {
+            val body = response.body()
+                ?: throw IllegalStateException("Successful response had no body")
+            print(body)
+            return body
+        }
+        else { throw HttpException(response)
+        }
+    }
+
     override suspend fun startAttempt(testId: Int): StartAttemptResponse {
         val response = testAttemptApiService.startAttempt(testId)
         if (response.isSuccessful) {

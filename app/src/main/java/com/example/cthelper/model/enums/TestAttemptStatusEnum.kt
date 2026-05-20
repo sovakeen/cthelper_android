@@ -1,6 +1,6 @@
 package com.example.cthelper.model.enums
 
-import com.example.cthelper.util.EnumAsIntSerializer
+import com.example.cthelper.model.util.EnumAsIntSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

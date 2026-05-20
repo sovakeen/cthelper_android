@@ -1,4 +1,4 @@
-package com.example.cthelper.util.composable
+package com.example.cthelper.ui.util
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border

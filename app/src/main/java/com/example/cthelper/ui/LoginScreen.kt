@@ -61,28 +61,28 @@ fun LoginScreen(
             )
             Spacer(modifier = Modifier.height(16.dp))
             Button(
-                onClick = { viewModel.login() }
+                onClick = { viewModel.login(navigateToTests) }
             ) {
                 Text(text = "Log in")
             }
-            Spacer(modifier = Modifier.height(16.dp))
-            Button(
-                onClick = { navigateToTests() }
-            ) {
-                Text(text = "Navigate to Tests")
-            }
-            Spacer(modifier = Modifier.height(8.dp))
-            Button(
-                onClick = navigateToQR
-            ) {
-                Text(text = "Go to QR Screen")
-            }
-            Spacer(modifier = Modifier.height(8.dp))
-            Button(
-                onClick = navigateToRegistration
-            ) {
-                Text(text = "Go to Registration")
-            }
+//            Spacer(modifier = Modifier.height(16.dp))
+//            Button(
+//                onClick = { navigateToTests() }
+//            ) {
+//                Text(text = "Navigate to Tests")
+//            }
+//            Spacer(modifier = Modifier.height(8.dp))
+//            Button(
+//                onClick = navigateToQR
+//            ) {
+//                Text(text = "Go to QR Screen")
+//            }
+//            Spacer(modifier = Modifier.height(8.dp))
+//            Button(
+//                onClick = navigateToRegistration
+//            ) {
+//                Text(text = "Go to Registration")
+//            }
         }
     }
 }

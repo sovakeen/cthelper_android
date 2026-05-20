@@ -1,4 +1,4 @@
-package com.example.cthelper.util
+package com.example.cthelper.model.util
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind

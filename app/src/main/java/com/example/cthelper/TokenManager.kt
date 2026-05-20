@@ -1,4 +1,4 @@
-package com.example.cthelper.util
+package com.example.cthelper
 
 import android.content.Context
 import android.content.SharedPreferences

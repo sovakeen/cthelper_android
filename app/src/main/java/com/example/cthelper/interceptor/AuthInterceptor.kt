@@ -1,6 +1,6 @@
 package com.example.cthelper.interceptor
 
-import com.example.cthelper.util.TokenManager
+import com.example.cthelper.TokenManager
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject

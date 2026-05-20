@@ -32,12 +32,13 @@ class LoginViewModel @Inject constructor(
         _uiState.value = _uiState.value.copy(password = password)
     }
 
-    fun login() {
+    fun login(navigateToTests: () -> Unit) {
         viewModelScope.launch {
             authRepositoryImpl.login(
                 email = _uiState.value.email,
                 password = _uiState.value.password
             )
+            navigateToTests()
         }
     }
 }

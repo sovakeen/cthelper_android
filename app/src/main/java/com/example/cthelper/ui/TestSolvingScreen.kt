@@ -21,7 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.cthelper.util.composable.QuestionCard
+import com.example.cthelper.ui.util.QuestionCard
 import com.example.cthelper.viewmodel.TestSolvingUiState
 import com.example.cthelper.viewmodel.TestSolvingViewModel
 
@@ -29,6 +29,7 @@ import com.example.cthelper.viewmodel.TestSolvingViewModel
 @Composable
 fun TestSolvingScreen(
     navigateBack: () -> Unit,
+    navigateToTests: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: TestSolvingViewModel = hiltViewModel()
 ) {
@@ -42,7 +43,7 @@ fun TestSolvingScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { viewModel.submitAttempt() }
+                onClick = { viewModel.submitAttempt(navigateToTests) }
             ) {
                 Icon(Icons.Default.Done, contentDescription = "Submit")
             }

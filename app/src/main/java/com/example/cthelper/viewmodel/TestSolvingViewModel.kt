@@ -5,6 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cthelper.model.QuestionInstance
+import com.example.cthelper.model.enums.AttemptStatus
 import com.example.cthelper.model.enums.QuestionType
 import com.example.cthelper.repository.TestAttemptRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -49,16 +50,32 @@ class TestSolvingViewModel @Inject constructor(
 
     private fun loadTest(testId: Int) {
         viewModelScope.launch {
-            _uiState.value = try {
+            try {
+                val attempts = testAttemptRepositoryImpl.getAttempts().attempts
+                val activeAttempt = attempts.find {
+                    it.testId == testId && (it.status == AttemptStatus.IN_PROGRESS || it.status == AttemptStatus.PAUSED)
+                }
+
+                if (activeAttempt != null) {
+                    testAttemptRepositoryImpl.cancelAttempt(activeAttempt.testAttemptId)
+                    val response = testAttemptRepositoryImpl.resumeAttempt(activeAttempt.testAttemptId)
+                    _uiState.value = TestSolvingUiState.Success(
+                        testId,
+                        response.attemptId,
+                        response.questionInstances
+                    )
+                    return@launch
+                }
+
                 val response = testAttemptRepositoryImpl.startAttempt(testId)
-                TestSolvingUiState.Success(
+                _uiState.value = TestSolvingUiState.Success(
                     testId,
                     response.attemptId,
                     response.questionInstances
                 )
             } catch (e: Exception) {
                 Log.e("Error", e.message ?: "no_error_msg")
-                TestSolvingUiState.Error(
+                _uiState.value = TestSolvingUiState.Error(
                     testId,
                     e.message ?: "no_error_msg"
                 )
@@ -67,7 +84,7 @@ class TestSolvingViewModel @Inject constructor(
     }
 
     fun onAnswerChanged(questionInstanceId: Int, newAnswer: String) {
-        Log.e("INFO___", newAnswer)
+//        Log.e("INFO", newAnswer)
         val currentState = _uiState.value
         if (currentState is TestSolvingUiState.Success) {
             val updatedList = currentState.questionInstances.map {
@@ -97,7 +114,7 @@ class TestSolvingViewModel @Inject constructor(
                             newAnswer
                         }
                     }
-                    Log.e("INFO___", updatedAnswer)
+//                    Log.e("INFO", updatedAnswer)
                     it.copy(userAnswer = updatedAnswer)
                 } else {
                     it
@@ -107,7 +124,7 @@ class TestSolvingViewModel @Inject constructor(
         }
     }
 
-    fun submitAttempt() {
+    fun submitAttempt(navigateToTests: () -> Unit) {
         val state = _uiState.value as TestSolvingUiState.Success
         val userAnswers = state.questionInstances.map { it.toUserAnswer() }
         viewModelScope.launch {
@@ -115,6 +132,7 @@ class TestSolvingViewModel @Inject constructor(
                 attemptId = state.attemptId,
                 userAnswers = userAnswers
             )
+            navigateToTests()
         }
     }
 }

@@ -2,7 +2,7 @@ package com.example.cthelper.repository
 
 import android.util.Base64
 import android.util.Log
-import com.example.cthelper.util.TokenManager
+import com.example.cthelper.TokenManager
 import com.example.cthelper.api.AuthApiService
 import com.example.cthelper.dto.auth.LoginRequest
 import org.json.JSONObject
