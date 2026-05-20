@@ -1,10 +1,9 @@
 package com.example.cthelper.api
 
-import com.example.cthelper.dto.testattempt.CompleteAttemptRequest
 import com.example.cthelper.dto.testattempt.CompleteAttemptResponse
-import com.example.cthelper.dto.testattempt.PauseAttemptRequest
 import com.example.cthelper.dto.testattempt.ResumeAttemptResponse
 import com.example.cthelper.dto.testattempt.StartAttemptResponse
+import com.example.cthelper.model.UserAnswer
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.PATCH
@@ -20,7 +19,7 @@ interface TestAttemptApiService {
     @PATCH("/attempts/{attemptId}/pause")
     suspend fun pauseAttempt(
         @Path("attemptId") attemptId: Int,
-        @Body request: PauseAttemptRequest,
+        @Body request: List<UserAnswer>,
     ): Response<Unit>
 
     @PATCH("/attempts/{attemptId}/resume")
@@ -31,7 +30,7 @@ interface TestAttemptApiService {
     @PATCH("/attempts/{attemptId}/complete")
     suspend fun completeAttempt(
         @Path("attemptId") attemptId: Int,
-        @Body request: CompleteAttemptRequest,
+        @Body request: List<UserAnswer>,
     ): Response<CompleteAttemptResponse>
 
     @PATCH("/attempts/{attemptId}/cancel")

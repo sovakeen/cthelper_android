@@ -1,10 +1,9 @@
 package com.example.cthelper.repository
 
+import android.util.Log
 import com.example.cthelper.model.UserAnswer
 import com.example.cthelper.api.TestAttemptApiService
-import com.example.cthelper.dto.testattempt.CompleteAttemptRequest
 import com.example.cthelper.dto.testattempt.CompleteAttemptResponse
-import com.example.cthelper.dto.testattempt.PauseAttemptRequest
 import com.example.cthelper.dto.testattempt.ResumeAttemptResponse
 import com.example.cthelper.dto.testattempt.StartAttemptResponse
 import retrofit2.HttpException
@@ -28,7 +27,7 @@ class TestAttemptRepositoryImpl @Inject constructor(
     override suspend fun pauseAttempt(attemptId: Int, userAnswers: List<UserAnswer>): Unit {
         val response = testAttemptApiService.pauseAttempt(
             attemptId,
-            PauseAttemptRequest(userAnswers)
+            userAnswers
         )
         if (!response.isSuccessful) { throw HttpException(response)
         }
@@ -48,11 +47,12 @@ class TestAttemptRepositoryImpl @Inject constructor(
     override suspend fun completeAttempt(attemptId: Int, userAnswers: List<UserAnswer>): CompleteAttemptResponse {
         val response = testAttemptApiService.completeAttempt(
             attemptId,
-            CompleteAttemptRequest(userAnswers)
+            userAnswers
         )
         if (response.isSuccessful) {
             val body = response.body()
                 ?: throw IllegalStateException("Successful response had no body")
+//            Log.e("INFO", "successful attempt ${body.attemptId} complete")
             return body
         }
         else { throw HttpException(response)
@@ -63,7 +63,6 @@ class TestAttemptRepositoryImpl @Inject constructor(
         val response = testAttemptApiService.cancelAttempt(
             attemptId
         )
-        if (!response.isSuccessful)  { throw HttpException(response)
-        }
+        if (!response.isSuccessful)  { throw HttpException(response) }
     }
 }
