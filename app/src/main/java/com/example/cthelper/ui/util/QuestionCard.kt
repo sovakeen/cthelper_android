@@ -82,8 +82,8 @@ fun QuestionCard(
         Text(text = code, style = MaterialTheme.typography.labelLarge, color = Color.Gray)
         Spacer(modifier = Modifier.height(8.dp))
         Text(text = statement, style = MaterialTheme.typography.titleMedium)
-        Spacer(modifier = Modifier.height(16.dp))
-        Text("userAnswer: ${questionInstance.userAnswer}")
+//        Spacer(modifier = Modifier.height(16.dp))
+//        Text("userAnswer: ${questionInstance.userAnswer}")
 
         when (type) {
             QuestionType.SINGLE_CHOICE -> {
