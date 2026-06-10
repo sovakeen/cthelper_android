@@ -1,7 +1,15 @@
 package com.example.cthelper
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -11,8 +19,11 @@ import androidx.navigation.navArgument
 import com.example.cthelper.ui.LoginScreen
 import com.example.cthelper.ui.QRScreen
 import com.example.cthelper.ui.RegistrationScreen
+import com.example.cthelper.ui.TestReviewScreen
 import com.example.cthelper.ui.TestSolvingScreen
 import com.example.cthelper.ui.TestsManagementScreen
+//import com.example.cthelper.viewmodel.TestReviewUiState
+//import com.example.cthelper.viewmodel.TestReviewViewModel
 
 @Composable
 fun CTHelperNavHost(
@@ -42,7 +53,9 @@ fun CTHelperNavHost(
             TestsManagementScreen(
                 navigateToTestSolving = { testId ->
                     navController.navigate("${AppDestinations.TEST_SOLVING.label}/$testId")
-                }
+                },
+                // Pass the QR navigation lambda here
+                navigateToQR = { navController.navigate(AppDestinations.QR_CODE.label) }
             )
         }
 
@@ -62,6 +75,34 @@ fun CTHelperNavHost(
                 navigateToTests = { navController.navigate(AppDestinations.TESTS_MANAGEMENT.label) }
             )
         }
+
+//        composable(
+//            route = "${AppDestinations.TEST_REVIEW.label}/{attemptId}",
+//            arguments = listOf(navArgument("attemptId") { type = NavType.IntType })
+//        ) {
+//            val viewModel: TestReviewViewModel = hiltViewModel()
+//            val uiState by viewModel.uiState.collectAsState()
+//
+//            when (val state = uiState) {
+//                is TestReviewUiState.Loading -> {
+//                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+//                        CircularProgressIndicator()
+//                    }
+//                }
+//                is TestReviewUiState.Error -> {
+//                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+//                        Text(text = "Error: ${state.msg}")
+//                    }
+//                }
+//                is TestReviewUiState.Success -> {
+//                    // Your unmodified UI screen!
+//                    TestReviewScreen(
+//                        testAttempt = state.testAttempt,
+//                        onBack = { navController.popBackStack() }
+//                    )
+//                }
+//            }
+//        }
     }
 }
 
@@ -72,5 +113,6 @@ enum class AppDestinations(
     LOGIN("Login"),
     TESTS_MANAGEMENT("TestManagement"),
     TEST_SOLVING("TestSolving"),
+    TEST_REVIEW("TestReview"),
     QR_CODE("QRCode")
 }

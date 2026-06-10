@@ -48,13 +48,21 @@ class TestSolvingViewModel @Inject constructor(
         }
     }
 
+//    override fun onCleared() {
+//        super.onCleared()
+//    }
+
     private fun loadTest(testId: Int) {
         viewModelScope.launch {
             try {
+
+
                 val attempts = testAttemptRepositoryImpl.getAttempts().attempts
                 val activeAttempt = attempts.find {
                     it.testId == testId && (it.status == AttemptStatus.IN_PROGRESS || it.status == AttemptStatus.PAUSED)
                 }
+
+//                Log.e("INFO", "${activeAttempt}")
 
                 if (activeAttempt != null) {
                     testAttemptRepositoryImpl.cancelAttempt(activeAttempt.testAttemptId)

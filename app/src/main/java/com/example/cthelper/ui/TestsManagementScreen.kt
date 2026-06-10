@@ -8,8 +8,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
@@ -19,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -30,25 +37,57 @@ import com.example.cthelper.ui.util.TestCard
 import com.example.cthelper.viewmodel.TestsManagementUiState
 import com.example.cthelper.viewmodel.TestManagementViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TestsManagementScreen(
     navigateToTestSolving: (Int) -> Unit,
+    navigateToQR: () -> Unit // <-- Added navigation parameter
 ) {
     var selectedTab by remember { mutableIntStateOf(0) }
     val tabs = listOf("Tests", "TestAttempts")
 
+    // State to handle the dropdown menu visibility
+    var menuExpanded by remember { mutableStateOf(false) }
+
     Scaffold(
         topBar = {
-            PrimaryTabRow(
-                selectedTabIndex = selectedTab,
-                modifier = Modifier.statusBarsPadding()
-            ) {
-                tabs.forEachIndexed { index, title ->
-                    Tab(
-                        selected = selectedTab == index,
-                        onClick = { selectedTab = index },
-                        text = { Text(title) }
-                    )
+            Column {
+                TopAppBar(
+                    title = { Text("CT Helper") },
+                    actions = {
+                        Box {
+                            IconButton(onClick = { menuExpanded = true }) {
+                                Icon(
+                                    imageVector = Icons.Default.MoreVert,
+                                    contentDescription = "Menu"
+                                )
+                            }
+                            DropdownMenu(
+                                expanded = menuExpanded,
+                                onDismissRequest = { menuExpanded = false }
+                            ) {
+                                DropdownMenuItem(
+                                    text = { Text("Scan QR Code") },
+                                    onClick = {
+                                        menuExpanded = false
+                                        navigateToQR()
+                                    }
+                                )
+                            }
+                        }
+                    },
+                    modifier = Modifier.statusBarsPadding() // Moved padding here
+                )
+                PrimaryTabRow(
+                    selectedTabIndex = selectedTab
+                ) {
+                    tabs.forEachIndexed { index, title ->
+                        Tab(
+                            selected = selectedTab == index,
+                            onClick = { selectedTab = index },
+                            text = { Text(title) }
+                        )
+                    }
                 }
             }
         }
@@ -56,11 +95,13 @@ fun TestsManagementScreen(
         Column(modifier = Modifier.padding(padding)) {
             when (selectedTab) {
                 0 -> TestsManagementTab(navigateToTestSolving)
-                1 -> TestAttemptsTab()
+                1 -> TestAttemptsTab(navigateToReview = {})
             }
         }
     }
 }
+
+// ... [Keep TestsManagementTab and TestAttemptsTab the exact same] ...
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -105,6 +146,7 @@ fun TestsManagementTab(
 @Composable
 fun TestAttemptsTab(
     modifier: Modifier = Modifier,
+    navigateToReview: (Int) -> Unit,
     viewModel: TestManagementViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
