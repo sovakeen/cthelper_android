@@ -1,8 +1,8 @@
 package com.example.cthelper.di
 
-import com.example.cthelper.api.AuthApiService
-import com.example.cthelper.api.TestApiService
-import com.example.cthelper.api.TestAttemptApiService
+import com.example.cthelper.network.api.AuthApiService
+import com.example.cthelper.network.api.TestApiService
+import com.example.cthelper.network.api.TestAttemptApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

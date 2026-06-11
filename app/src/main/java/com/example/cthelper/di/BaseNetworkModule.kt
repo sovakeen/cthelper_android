@@ -1,7 +1,7 @@
 package com.example.cthelper.di
 
-import com.example.cthelper.interceptor.AuthInterceptor
-import com.example.cthelper.interceptor.CookieInterceptor
+import com.example.cthelper.network.interceptor.AuthInterceptor
+import com.example.cthelper.network.interceptor.CookieInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

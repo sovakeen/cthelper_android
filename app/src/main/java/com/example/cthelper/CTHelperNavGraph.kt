@@ -1,27 +1,18 @@
 package com.example.cthelper
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.cthelper.ui.LoginScreen
-import com.example.cthelper.ui.QRScreen
-import com.example.cthelper.ui.RegistrationScreen
-import com.example.cthelper.ui.TestReviewScreen
-import com.example.cthelper.ui.TestSolvingScreen
-import com.example.cthelper.ui.TestsManagementScreen
+import com.example.cthelper.feature.common.login.LoginScreen
+import com.example.cthelper.feature.student.teachers.QRScreen
+import com.example.cthelper.feature.common.registration.RegistrationScreen
+import com.example.cthelper.feature.student.testsolving.TestSolvingScreen
+import com.example.cthelper.feature.student.testslist.TestsListScreen
 //import com.example.cthelper.viewmodel.TestReviewUiState
 //import com.example.cthelper.viewmodel.TestReviewViewModel
 
@@ -44,13 +35,13 @@ fun CTHelperNavHost(
         composable(route = AppDestinations.LOGIN.label) {
             LoginScreen(
                 navigateToRegistration = { navController.navigate(AppDestinations.REGISTRATION.label) },
-                navigateToTests = { navController.navigate(AppDestinations.TESTS_MANAGEMENT.label) },
-                navigateToQR = { navController.navigate(AppDestinations.QR_CODE.label) }
+//                navigateToTests = { navController.navigate(AppDestinations.TESTS_MANAGEMENT.label) },
+//                navigateToQR = { navController.navigate(AppDestinations.QR_CODE.label) }
             )
         }
 
         composable(route = AppDestinations.TESTS_MANAGEMENT.label) {
-            TestsManagementScreen(
+            TestsListScreen(
                 navigateToTestSolving = { testId ->
                     navController.navigate("${AppDestinations.TEST_SOLVING.label}/$testId")
                 },
@@ -59,7 +50,7 @@ fun CTHelperNavHost(
             )
         }
 
-        @OptIn(androidx.camera.core.ExperimentalGetImage::class)
+//        @OptIn(androidx.camera.core.ExperimentalGetImage::class)
         composable(route = AppDestinations.QR_CODE.label) {
             QRScreen()
         }
@@ -71,8 +62,8 @@ fun CTHelperNavHost(
             )
         ) {
             TestSolvingScreen(
-                navigateBack = { navController.popBackStack() },
-                navigateToTests = { navController.navigate(AppDestinations.TESTS_MANAGEMENT.label) }
+//                navigateBack = { navController.popBackStack() },
+                navigateToTestsList = { navController.navigate(AppDestinations.TESTS_MANAGEMENT.label) }
             )
         }
 
