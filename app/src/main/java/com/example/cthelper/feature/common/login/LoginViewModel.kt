@@ -1,6 +1,5 @@
 package com.example.cthelper.feature.common.login
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cthelper.root.TokenManager
@@ -21,7 +20,7 @@ data class LoginUiState(
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    val authRepositoryImpl: AuthRepositoryImpl,
+    val authRepositoryImpl: LoginRepositoryImpl,
     val tokenManager: TokenManager
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(LoginUiState())

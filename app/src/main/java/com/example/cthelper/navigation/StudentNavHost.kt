@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.cthelper.feature.student.attemptslist.AttemptsListScreen
 import com.example.cthelper.feature.student.testslist.TestsListScreen
 import com.example.cthelper.feature.student.testsolving.TestSolvingScreen
 
@@ -16,9 +17,9 @@ fun StudentNavHost(onLogout: () -> Unit) {
     NavHost(navController = navController, startDestination = StudentDestinations.TESTS_LIST.label) {
         composable(StudentDestinations.TESTS_LIST.label) {
             TestsListScreen(
-                navigateToTestSolving = { testId -> navController.navigate("test_solving/$testId") },
-                navigateToQR = { navController.navigate("qr_code") },
-//                onLogout = { onLogout() }
+                navigateToTestSolving = { testId -> navController.navigate("${StudentDestinations.TEST_SOLVING.label}/$testId") },
+                navigateToAttemptsList = { navController.navigate(StudentDestinations.ATTEMPTS_LIST.label) },
+                onLogout = { onLogout() }
             )
         }
 
@@ -27,6 +28,16 @@ fun StudentNavHost(onLogout: () -> Unit) {
             arguments = listOf(navArgument("testId") { type = NavType.IntType })
         ) {
             TestSolvingScreen(
+                navigateToTestsList = {
+                    navController.navigate(StudentDestinations.TESTS_LIST.label)
+                }
+            )
+        }
+
+        composable(
+            route = StudentDestinations.ATTEMPTS_LIST.label
+        ) {
+            AttemptsListScreen(
                 navigateToTestsList = {
                     navController.navigate(StudentDestinations.TESTS_LIST.label)
                 }

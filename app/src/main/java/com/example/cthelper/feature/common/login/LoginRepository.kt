@@ -9,21 +9,21 @@ import org.json.JSONObject
 import java.nio.charset.StandardCharsets
 import javax.inject.Inject
 
-interface AuthRepository {
+interface LoginRepository {
     suspend fun login(email: String, password: String): String?
 }
 
-class AuthRepositoryImpl @Inject constructor(
+class LoginRepositoryImpl @Inject constructor(
     private val authApiService: AuthApiService,
     private val tokenManager: TokenManager
-) : AuthRepository {
+) : LoginRepository {
     override suspend fun login(email: String, password: String): String? {
         val response = authApiService.login(
             LoginRequest(
                 email = email,
                 password = password,
-                clientType = 1,
 //                dummy values
+                clientType = 1,
                 ipAddress = "192.168.0.1",
                 deviceInfo = "{}",
                 deviceId = "string"

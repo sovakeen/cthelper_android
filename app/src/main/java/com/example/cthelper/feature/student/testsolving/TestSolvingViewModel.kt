@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.cthelper.network.model.QuestionInstance
 import com.example.cthelper.network.model.enums.AttemptStatus
 import com.example.cthelper.network.model.enums.QuestionType
-import com.example.cthelper.repository.TestAttemptRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -35,7 +34,7 @@ sealed interface TestSolvingUiState {
 @HiltViewModel
 class TestSolvingViewModel @Inject constructor(
     val savedStateHandle: SavedStateHandle,
-    val testAttemptRepositoryImpl: TestAttemptRepositoryImpl
+    val testSolvingRepositoryImpl: TestSolvingRepositoryImpl
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<TestSolvingUiState>(TestSolvingUiState.Loading())
     val uiState: StateFlow<TestSolvingUiState> = _uiState.asStateFlow()
@@ -55,18 +54,16 @@ class TestSolvingViewModel @Inject constructor(
     private fun loadTest(testId: Int) {
         viewModelScope.launch {
             try {
-
-
-                val attempts = testAttemptRepositoryImpl.getAttempts().attempts
+                val attempts = testSolvingRepositoryImpl.getAttempts().attempts
                 val activeAttempt = attempts.find {
                     it.testId == testId && (it.status == AttemptStatus.IN_PROGRESS || it.status == AttemptStatus.PAUSED)
                 }
 
-//                Log.e("INFO", "${activeAttempt}")
+                Log.e("INFO", "${activeAttempt}")
 
                 if (activeAttempt != null) {
-                    testAttemptRepositoryImpl.cancelAttempt(activeAttempt.testAttemptId)
-                    val response = testAttemptRepositoryImpl.resumeAttempt(activeAttempt.testAttemptId)
+                    testSolvingRepositoryImpl.cancelAttempt(activeAttempt.testAttemptId)
+                    val response = testSolvingRepositoryImpl.resumeAttempt(activeAttempt.testAttemptId)
                     _uiState.value = TestSolvingUiState.Success(
                         testId,
                         response.attemptId,
@@ -75,7 +72,7 @@ class TestSolvingViewModel @Inject constructor(
                     return@launch
                 }
 
-                val response = testAttemptRepositoryImpl.startAttempt(testId)
+                val response = testSolvingRepositoryImpl.startAttempt(testId)
                 _uiState.value = TestSolvingUiState.Success(
                     testId,
                     response.attemptId,
@@ -136,7 +133,7 @@ class TestSolvingViewModel @Inject constructor(
         val state = _uiState.value as TestSolvingUiState.Success
         val userAnswers = state.questionInstances.map { it.toUserAnswer() }
         viewModelScope.launch {
-            testAttemptRepositoryImpl.completeAttempt(
+            testSolvingRepositoryImpl.completeAttempt(
                 attemptId = state.attemptId,
                 userAnswers = userAnswers
             )

@@ -5,13 +5,20 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface TestApiService {
     @POST("/tests/student/list")
     suspend fun testsList(
         @Body request: TestsListRequest
     ): Response<TestsListResponse>
+
+    @GET("/tests/{testId}/details")
+    suspend fun testDetails(
+        @Path("testId") testId: Int
+    ): Response<Test>
 }
 
 // testsList ---------------------------------------------------------------------

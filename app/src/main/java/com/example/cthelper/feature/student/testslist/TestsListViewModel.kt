@@ -4,8 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cthelper.network.model.Test
 import com.example.cthelper.network.model.TestAttempt
-import com.example.cthelper.repository.TestAttemptRepositoryImpl
-import com.example.cthelper.repository.TestRepositoryImpl
+import com.example.cthelper.feature.student.attemptslist.AttemptsListRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,7 +15,6 @@ import javax.inject.Inject
 sealed interface TestsListUiState {
     data class Success(
         val tests: List<Test>,
-        val testAttempts: List<TestAttempt>
     ): TestsListUiState
     object Loading: TestsListUiState
     data class Error(
@@ -25,9 +23,8 @@ sealed interface TestsListUiState {
 }
 
 @HiltViewModel
-class TestListViewModel @Inject constructor(
-    val testRepositoryImpl: TestRepositoryImpl,
-    val testAttemptRepositoryImpl: TestAttemptRepositoryImpl
+class TestsListViewModel @Inject constructor(
+    val testRepositoryImpl: TestsListRepositoryImpl
 ) : ViewModel() {
     private var _uiState = MutableStateFlow<TestsListUiState>(TestsListUiState.Loading)
     val uiState: StateFlow<TestsListUiState> = _uiState.asStateFlow()
@@ -39,7 +36,7 @@ class TestListViewModel @Inject constructor(
     fun loadTestsData() {
         viewModelScope.launch {
             _uiState.value = try {
-                TestsListUiState.Success(testRepositoryImpl.getTests(), testAttemptRepositoryImpl.getAttempts().attempts)
+                TestsListUiState.Success(testRepositoryImpl.getTests())
             } catch (e: Exception) {
                 TestsListUiState.Error(e.message ?: "no_error_msg")
             }

@@ -1,4 +1,4 @@
-package com.example.cthelper.repository
+package com.example.cthelper.feature.student.testslist
 
 import com.example.cthelper.network.api.TestApiService
 import com.example.cthelper.network.api.TestsListRequest
@@ -6,13 +6,13 @@ import com.example.cthelper.network.model.Test
 import retrofit2.HttpException
 import javax.inject.Inject
 
-interface TestRepository {
+interface TestsListRepository {
     suspend fun getTests(): List<Test>
 }
 
-class TestRepositoryImpl @Inject constructor(
+class TestsListRepositoryImpl @Inject constructor(
     private val testApiService: TestApiService
-): TestRepository {
+): TestsListRepository {
     override suspend fun getTests(): List<Test> {
         val response = testApiService.testsList(
             TestsListRequest()

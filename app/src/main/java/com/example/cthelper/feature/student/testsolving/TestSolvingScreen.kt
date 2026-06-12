@@ -70,18 +70,18 @@ fun TestSolvingContent(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(text = "Solving test ${uiState.testId}")
-                            Text(
-                                text = "14:59",
-                                style = MaterialTheme.typography.titleMedium,
-                                color = MaterialTheme.colorScheme.primary
-                            )
+//                            Text(
+//                                text = "14:59",
+//                                style = MaterialTheme.typography.titleMedium,
+//                                color = MaterialTheme.colorScheme.primary
+//                            )
                         }
                     }
                 )
-                LinearProgressIndicator(
-                    progress = { 0.6f },
-                    modifier = Modifier.fillMaxWidth()
-                )
+//                LinearProgressIndicator(
+//                    progress = { 0.6f },
+//                    modifier = Modifier.fillMaxWidth()
+//                )
             }
         },
         floatingActionButton = {
@@ -130,7 +130,7 @@ fun TestSolvingContent(
 fun TestSolvingScreenPreview() {
     val testJsonString = """
     {"testId":13,"testName":"Русский язык - Орфография (Публичный тест)","attemptId":213,"status":1,"duration":0,"rawScore":null,"problems":[{"userAnswer":"","userAnswerId":1153,"code":"A1","type":1,"statement":"{\"statement\": \"В каком слове пропущена буква И?\", \"answer1\": \"пр...одолеть\", \"answer2\": \"пр...пятствие\", \"answer3\": \"пр...тендент\", \"answer4\": \"пр...зирать (не уважать)\", \"answer5\": \"пр...емник (продолжатель)\"}"},{"userAnswer":"","userAnswerId":1154,"code":"A2","type":2,"statement":"{\"statement\": \"Выберите слова, в которых пишется разделительный Ъ:\", \"answer1\": \"с...экономить\", \"answer2\": \"ад...ютант\", \"answer3\": \"с...узить\", \"answer4\": \"ин...екция\", \"answer5\": \"кон...юнктура\"}"},{"userAnswer":"","userAnswerId":1155,"code":"A3","type":1,"statement":"{\"statement\": \"В каком слове пишется Ь для обозначения мягкости?\", \"answer1\": \"ноч...\", \"answer2\": \"береч...\", \"answer3\": \"мел...\", \"answer4\": \"сплош...\", \"answer5\": \"замуж...\"}"},{"userAnswer":"","userAnswerId":1156,"code":"A4","type":2,"statement":"{\"statement\": \"Выберите слова, в которых пишется буква А в корне -лаг-/-лож-:\", \"answer1\": \"предл...жение\", \"answer2\": \"изл...гать\", \"answer3\": \"пол...жить\", \"answer4\": \"сл...гаемое\", \"answer5\": \"перел...жить\"}"},{"userAnswer":"","userAnswerId":1157,"code":"A5","type":2,"statement":"{\"statement\": \"Выберите слова с чередующейся гласной в корне (буква И):\", \"answer1\": \"соб...рать\", \" зам...реть\", \"выт...рать\", \"ст...реть\", \"отп...рать\"}"},{"userAnswer":"","userAnswerId":1158,"code":"B1","type":3,"statement":"{\"statement\": \"Вставьте пропущенную букву: об...езд\", \"placeholder\": \"Введите одну букву\"}"}]}
-"""
+    """
     val testJson = JSONObject(testJsonString)
     val problems = testJson.getJSONArray("problems")
     val questionInstances = mutableListOf<QuestionInstance>()

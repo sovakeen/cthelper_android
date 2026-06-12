@@ -1,4 +1,4 @@
-package com.example.cthelper.feature.student.attemptslist
+package com.example.cthelper.feature.student.attemptreview
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -21,6 +21,7 @@ import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -29,31 +30,43 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cthelper.network.model.QuestionInstanceExt
 import com.example.cthelper.network.model.TestAttempt
 import com.example.cthelper.network.model.enums.AttemptStatus
 import com.example.cthelper.network.model.enums.QuestionType
 import com.example.cthelper.theme.CTHelperTheme
+import com.example.cthelper.viewmodel.AttemptReviewUiState
+import com.example.cthelper.viewmodel.AttemptReviewViewModel
 import org.json.JSONObject
 import kotlin.text.iterator
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AttemptReviewScreen(
-    testAttempt: TestAttempt,
     onBack: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: AttemptReviewViewModel = hiltViewModel()
 ) {
+    val uiState by viewModel.uiState.collectAsState()
+
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = testAttempt.testName) },
+                title = {
+                    when (uiState) {
+                        is AttemptReviewUiState.Success -> { Text(text = (uiState as AttemptReviewUiState.Success).testAttempt.testName) }
+                        else -> { Text(text = "") }
+                    }
+                },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
@@ -70,14 +83,26 @@ fun AttemptReviewScreen(
                 .padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            item {
-                ReviewSummary(testAttempt)
-            }
-            items(testAttempt.userAnswers) { answer ->
-                ReviewQuestionCard(answer)
-            }
-            item {
-                Spacer(modifier = Modifier.height(16.dp))
+            when (uiState) {
+                is AttemptReviewUiState.Success -> {
+                    item {
+                        ReviewSummary((uiState as AttemptReviewUiState.Success).testAttempt)
+                    }
+                    items((uiState as AttemptReviewUiState.Success).testAttempt.userAnswers) { answer ->
+                        ReviewQuestionCard(answer)
+                    }
+                    item {
+                        Spacer(modifier = Modifier.height(16.dp))
+                    }
+                }
+                else -> item {
+                    Box(
+                        modifier = Modifier.fillParentMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
             }
         }
     }
@@ -356,7 +381,6 @@ fun AttemptReviewScreenPreview() {
 
     CTHelperTheme {
         AttemptReviewScreen(
-            testAttempt = attempt,
             onBack = {}
         )
     }

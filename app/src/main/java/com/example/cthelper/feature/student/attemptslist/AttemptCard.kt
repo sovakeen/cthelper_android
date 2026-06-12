@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.example.cthelper.network.model.TestAttempt
 
 @Composable
-fun TestAttemptCard(
+fun AttemptCard(
     testAttempt: TestAttempt,
     modifier: Modifier = Modifier,
     onClick: (Int) -> Unit = {  },
