@@ -1,9 +1,10 @@
 package com.example.cthelper.feature.common.login
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cthelper.repository.AuthRepositoryImpl
 import com.example.cthelper.root.TokenManager
+import com.example.cthelper.root.UserRole
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -34,13 +35,15 @@ class LoginViewModel @Inject constructor(
         _uiState.value = _uiState.value.copy(password = password)
     }
 
-    fun login(onLoginSuccess: (String) -> Unit) {
+    fun login(onLoginSuccess: (UserRole) -> Unit) {
         viewModelScope.launch {
             authRepositoryImpl.login(
                 email = _uiState.value.email,
                 password = _uiState.value.password
             )
-            onLoginSuccess(tokenManager.getUserRole() ?: "Student")
+            val role = tokenManager.getUserRole() ?: "Student"
+//            Log.e("INFO", role)
+            if (role == "Student") onLoginSuccess(UserRole.STUDENT) else onLoginSuccess(UserRole.TEACHER)
         }
     }
 }

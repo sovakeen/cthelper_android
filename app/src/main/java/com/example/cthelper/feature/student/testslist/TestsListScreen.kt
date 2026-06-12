@@ -105,19 +105,19 @@ fun TestsListScreen(
 fun TestsManagementTab(
     navigateToTestSolving: (Int) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: TestManagementViewModel = hiltViewModel()
+    viewModel: TestListViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
     Box(modifier = Modifier.fillMaxSize()) {
         when (uiState) {
-            is TestsManagementUiState.Success -> LazyColumn(
+            is TestsListUiState.Success -> LazyColumn(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .padding(10.dp)
                     .fillMaxSize()
             ) {
-                items((uiState as TestsManagementUiState.Success).tests) { item ->
+                items((uiState as TestsListUiState.Success).tests) { item ->
                     TestCard(
                         test = item,
                         modifier = Modifier
@@ -127,9 +127,9 @@ fun TestsManagementTab(
                     )
                 }
             }
-            is TestsManagementUiState.Loading -> CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            is TestsManagementUiState.Error -> Text(
-                text = "The following error occurred:\n${(uiState as TestsManagementUiState.Error).msg}",
+            is TestsListUiState.Loading -> CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            is TestsListUiState.Error -> Text(
+                text = "The following error occurred:\n${(uiState as TestsListUiState.Error).msg}",
                 modifier = Modifier
                     .align(Alignment.Center)
             )
@@ -144,19 +144,19 @@ fun TestsManagementTab(
 fun TestAttemptsTab(
     modifier: Modifier = Modifier,
     navigateToReview: (Int) -> Unit,
-    viewModel: TestManagementViewModel = hiltViewModel()
+    viewModel: TestListViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
     Box(modifier = Modifier.fillMaxSize()) {
         when (uiState) {
-            is TestsManagementUiState.Success -> LazyColumn(
+            is TestsListUiState.Success -> LazyColumn(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .padding(10.dp)
                     .fillMaxSize()
             ) {
-                items((uiState as TestsManagementUiState.Success).testAttempts) { item ->
+                items((uiState as TestsListUiState.Success).testAttempts) { item ->
                     TestAttemptCard(
                         testAttempt = item,
                         modifier = Modifier
@@ -166,9 +166,9 @@ fun TestAttemptsTab(
                     )
                 }
             }
-            is TestsManagementUiState.Loading -> CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            is TestsManagementUiState.Error -> Text(
-                text = "The following error occurred:\n${(uiState as TestsManagementUiState.Error).msg}",
+            is TestsListUiState.Loading -> CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            is TestsListUiState.Error -> Text(
+                text = "The following error occurred:\n${(uiState as TestsListUiState.Error).msg}",
                 modifier = Modifier
                     .align(Alignment.Center)
             )

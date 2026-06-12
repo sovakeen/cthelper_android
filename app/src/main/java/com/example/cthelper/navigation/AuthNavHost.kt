@@ -7,10 +7,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.cthelper.feature.common.login.LoginScreen
 import com.example.cthelper.feature.common.registration.RegistrationScreen
+import com.example.cthelper.root.UserRole
 
 @Composable
 fun AuthNavHost(
-    onLoginSuccess: (String) -> Unit
+    onLoginSuccess: (UserRole) -> Unit
 ) {
     val navController = rememberNavController()
 

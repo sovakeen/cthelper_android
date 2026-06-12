@@ -21,7 +21,6 @@ fun RootApp(
 
     when (val state = sessionState) {
         is SessionState.Loading -> {
-            // Show a splash screen or spinner while checking if user is already logged in
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator()
             }
@@ -29,8 +28,7 @@ fun RootApp(
         is SessionState.Unauthenticated -> {
             AuthNavHost(
                 onLoginSuccess = {
-                    // TODO: Pass the actual role from your API response here
-                    viewModel.onLoginSuccess(UserRole.STUDENT)
+                    viewModel.onLoginSuccess(it)
                 }
             )
         }

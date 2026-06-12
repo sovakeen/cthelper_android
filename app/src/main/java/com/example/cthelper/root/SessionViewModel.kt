@@ -23,10 +23,8 @@ sealed interface SessionState {
 
 @HiltViewModel
 class SessionViewModel @Inject constructor(
-    // Inject your AuthRepository or DataStore here later to check saved tokens!
+//    tokenManager: TokenManager
 ) : ViewModel() {
-
-    // App starts in a loading state while we check for saved tokens
     private val _sessionState = MutableStateFlow<SessionState>(SessionState.Loading)
     val sessionState: StateFlow<SessionState> = _sessionState.asStateFlow()
 
@@ -36,22 +34,19 @@ class SessionViewModel @Inject constructor(
 
     private fun checkExistingSession() {
         viewModelScope.launch {
-            // TODO: Check SharedPreferences/DataStore for a saved token
-            delay(1000) // Simulating a splash screen load
+            // check for saved tokens
+            delay(1000)
 
-            // For now, default to logged out:
             _sessionState.value = SessionState.Unauthenticated
         }
     }
 
-    // Call this from your LoginScreen when the API returns success!
     fun onLoginSuccess(role: UserRole) {
         _sessionState.value = SessionState.Authenticated(role)
     }
 
-    // Call this from a "Logout" button anywhere in the app
     fun logout() {
-        // TODO: Clear saved tokens here
+        // clear saved tokens
         _sessionState.value = SessionState.Unauthenticated
     }
 }

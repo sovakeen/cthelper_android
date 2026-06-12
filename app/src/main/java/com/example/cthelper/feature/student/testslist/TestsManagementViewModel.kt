@@ -13,24 +13,24 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-sealed interface TestsManagementUiState {
+sealed interface TestsListUiState {
     data class Success(
         val tests: List<Test>,
         val testAttempts: List<TestAttempt>
-    ): TestsManagementUiState
-    object Loading: TestsManagementUiState
+    ): TestsListUiState
+    object Loading: TestsListUiState
     data class Error(
         val msg: String
-    ): TestsManagementUiState
+    ): TestsListUiState
 }
 
 @HiltViewModel
-class TestManagementViewModel @Inject constructor(
+class TestListViewModel @Inject constructor(
     val testRepositoryImpl: TestRepositoryImpl,
     val testAttemptRepositoryImpl: TestAttemptRepositoryImpl
 ) : ViewModel() {
-    private var _uiState = MutableStateFlow<TestsManagementUiState>(TestsManagementUiState.Loading)
-    val uiState: StateFlow<TestsManagementUiState> = _uiState.asStateFlow()
+    private var _uiState = MutableStateFlow<TestsListUiState>(TestsListUiState.Loading)
+    val uiState: StateFlow<TestsListUiState> = _uiState.asStateFlow()
 
     init {
         loadTestsData()
@@ -39,9 +39,9 @@ class TestManagementViewModel @Inject constructor(
     fun loadTestsData() {
         viewModelScope.launch {
             _uiState.value = try {
-                TestsManagementUiState.Success(testRepositoryImpl.getTests(), testAttemptRepositoryImpl.getAttempts().attempts)
+                TestsListUiState.Success(testRepositoryImpl.getTests(), testAttemptRepositoryImpl.getAttempts().attempts)
             } catch (e: Exception) {
-                TestsManagementUiState.Error(e.message ?: "no_error_msg")
+                TestsListUiState.Error(e.message ?: "no_error_msg")
             }
         }
     }
