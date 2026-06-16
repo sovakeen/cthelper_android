@@ -39,21 +39,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.cthelper.network.api.AttemptDetailsResponse
 import com.example.cthelper.network.model.QuestionInstanceExt
 import com.example.cthelper.network.model.TestAttempt
 import com.example.cthelper.network.model.enums.AttemptStatus
 import com.example.cthelper.network.model.enums.QuestionType
 import com.example.cthelper.theme.CTHelperTheme
-import com.example.cthelper.viewmodel.AttemptReviewUiState
-import com.example.cthelper.viewmodel.AttemptReviewViewModel
 import org.json.JSONObject
 import kotlin.text.iterator
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AttemptReviewScreen(
-    onBack: () -> Unit,
     modifier: Modifier = Modifier,
+    navigateToTestsList: () -> Unit = {},
     viewModel: AttemptReviewViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -63,12 +62,12 @@ fun AttemptReviewScreen(
             TopAppBar(
                 title = {
                     when (uiState) {
-                        is AttemptReviewUiState.Success -> { Text(text = (uiState as AttemptReviewUiState.Success).testAttempt.testName) }
-                        else -> { Text(text = "") }
+                        is AttemptReviewUiState.Success -> { Text(text = (uiState as AttemptReviewUiState.Success).attemptDetails.testName) }
+                        else -> { Text(text = "Loading") }
                     }
                 },
                 navigationIcon = {
-                    IconButton(onClick = onBack) {
+                    IconButton(onClick = { navigateToTestsList() }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
                 }
@@ -86,9 +85,9 @@ fun AttemptReviewScreen(
             when (uiState) {
                 is AttemptReviewUiState.Success -> {
                     item {
-                        ReviewSummary((uiState as AttemptReviewUiState.Success).testAttempt)
+                        ReviewSummary((uiState as AttemptReviewUiState.Success).attemptDetails)
                     }
-                    items((uiState as AttemptReviewUiState.Success).testAttempt.userAnswers) { answer ->
+                    items((uiState as AttemptReviewUiState.Success).attemptDetails.userAnswers) { answer ->
                         ReviewQuestionCard(answer)
                     }
                     item {
@@ -109,7 +108,7 @@ fun AttemptReviewScreen(
 }
 
 @Composable
-fun ReviewSummary(testAttempt: TestAttempt) {
+fun ReviewSummary(attemptDetails: AttemptDetailsResponse) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -128,7 +127,7 @@ fun ReviewSummary(testAttempt: TestAttempt) {
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     Text(
-                        text = "69 points",
+                        text = "${attemptDetails.rawScore} points",
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold
                     )
@@ -140,7 +139,7 @@ fun ReviewSummary(testAttempt: TestAttempt) {
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     Text(
-                        text = "7m13s",
+                        text = "${attemptDetails.duration}",
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold
                     )
@@ -347,7 +346,7 @@ fun AttemptReviewScreenPreview() {
     val json = JSONObject(sampleJsonString)
     val userAnswersJson = json.getJSONArray("userAnswers")
     val userAnswers = mutableListOf<QuestionInstanceExt>()
-    
+
     for (i in 0 until userAnswersJson.length()) {
         val obj = userAnswersJson.getJSONObject(i)
         userAnswers.add(
@@ -381,7 +380,7 @@ fun AttemptReviewScreenPreview() {
 
     CTHelperTheme {
         AttemptReviewScreen(
-            onBack = {}
+//            onBack = {}
         )
     }
 }
