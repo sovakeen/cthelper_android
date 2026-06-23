@@ -156,7 +156,7 @@ fun ReviewQuestionCard(
 ) {
     val statementJson = JSONObject(question.statement)
     val statement = statementJson.getString("statement")
-    
+
     val explanationText = if (!question.explanation.isNullOrBlank()) {
         JSONObject(question.explanation).optString("explanation", "")
     } else ""
@@ -182,19 +182,19 @@ fun ReviewQuestionCard(
                     color = MaterialTheme.colorScheme.primary
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
             Text(text = statement, style = MaterialTheme.typography.bodyLarge)
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             AnswerSection(
                 label = "Your Answer:",
                 answer = formatAnswer(question.userAnswer, statementJson, question.type),
                 color = if (question.isCorrect) Color(0xFFE8F5E9) else Color(0xFFFFEBEE),
                 textColor = if (question.isCorrect) Color(0xFF2E7D32) else Color(0xFFC62828)
             )
-            
+
             if (!question.isCorrect) {
                 Spacer(modifier = Modifier.height(8.dp))
                 AnswerSection(
@@ -204,7 +204,7 @@ fun ReviewQuestionCard(
                     textColor = Color(0xFF2E7D32)
                 )
             }
-            
+
             if (explanationText.isNotBlank()) {
                 Spacer(modifier = Modifier.height(16.dp))
                 Box(

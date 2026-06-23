@@ -2,6 +2,7 @@ package com.example.cthelper.feature.student.testslist
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -10,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -48,7 +50,14 @@ fun TestsListScreen(
                 TopAppBar(
                     title = { Text("CTHelper") },
                     actions = {
-                        Box {
+                        Row {
+                            IconButton(onClick = {  }) {
+                                Icon(
+                                    imageVector = Icons.Default.Search,
+                                    contentDescription = "Menu"
+                                )
+                            }
+
                             IconButton(onClick = { menuExpanded = true }) {
                                 Icon(
                                     imageVector = Icons.Default.MoreVert,
@@ -65,6 +74,18 @@ fun TestsListScreen(
                                         menuExpanded = false
                                         navigateToAttemptsList()
                                     }
+                                )
+                                DropdownMenuItem(
+                                    text = { Text("Statistics") },
+                                    onClick = {  }
+                                )
+                                DropdownMenuItem(
+                                    text = { Text("Teachers") },
+                                    onClick = {  }
+                                )
+                                DropdownMenuItem(
+                                    text = { Text("Profile") },
+                                    onClick = {  }
                                 )
                                 DropdownMenuItem(
                                     text = { Text("Log out") },
