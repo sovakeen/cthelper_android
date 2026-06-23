@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class UserAnswer(
     @SerialName("userAnswerId") val questionInstanceId: Int,
-    @SerialName("userAnswer") val userAnswer: String? = null,
+    @SerialName("answer") val userAnswer: String? = null,
 )
