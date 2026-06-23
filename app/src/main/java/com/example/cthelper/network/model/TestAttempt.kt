@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 data class TestAttempt (
     @SerialName("testAttemptId") val testAttemptId: Int,
     @SerialName("testName") val testName: String,
-    @SerialName("testId") val testId: Int = 0,
+//    @SerialName("testId") val testId: Int = 0,
     @SerialName("studentId") val studentId: Int = 0,
     @SerialName("studentName") val studentName: String= "",
     @SerialName("status") val status: AttemptStatus,

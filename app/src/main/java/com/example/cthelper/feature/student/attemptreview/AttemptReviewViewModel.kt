@@ -31,7 +31,9 @@ class AttemptReviewViewModel @Inject constructor(
     val uiState: StateFlow<AttemptReviewUiState> = _uiState.asStateFlow()
 
     init {
-        loadDummyAttempt()
+        val attemptId: Int = savedStateHandle.get<Int>("attemptId")!!
+        loadAttempt(attemptId)
+//        loadDummyAttempt()
     }
 
     private fun loadDummyAttempt() {

@@ -4,6 +4,7 @@ import com.example.cthelper.network.api.AttemptsListResponse
 import com.example.cthelper.network.api.CompleteAttemptResponse
 import com.example.cthelper.network.api.ResumeAttemptResponse
 import com.example.cthelper.network.api.StartAttemptResponse
+import com.example.cthelper.network.api.TestApiService
 import com.example.cthelper.network.api.TestAttemptApiService
 import com.example.cthelper.network.model.UserAnswer
 import retrofit2.HttpException
@@ -16,10 +17,12 @@ interface TestSolvingRepository {
     suspend fun resumeAttempt(attemptId: Int): ResumeAttemptResponse
     suspend fun completeAttempt(attemptId: Int, userAnswers: List<UserAnswer>): CompleteAttemptResponse
     suspend fun cancelAttempt(attemptId: Int): Unit
+    suspend fun getTestName(testId: Int): String
 }
 
 class TestSolvingRepositoryImpl @Inject constructor(
-    private val testAttemptApiService: TestAttemptApiService
+    private val testAttemptApiService: TestAttemptApiService,
+    val testApiService: TestApiService
 ): TestSolvingRepository {
     override suspend fun getAttempts(): AttemptsListResponse {
         val response = testAttemptApiService.attemptsList()
@@ -76,5 +79,14 @@ class TestSolvingRepositoryImpl @Inject constructor(
             attemptId
         )
         if (!response.isSuccessful) { throw HttpException(response) }
+    }
+
+    override suspend fun getTestName(testId: Int): String {
+        val response = testApiService.testDetails(
+            testId
+        )
+        if (response.isSuccessful) {
+            return response.body()?.testName ?: ""
+        } else { throw HttpException(response) }
     }
 }

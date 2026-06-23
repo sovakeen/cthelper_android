@@ -139,7 +139,7 @@ fun ReviewSummary(attemptDetails: AttemptDetailsResponse) {
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     Text(
-                        text = "${attemptDetails.duration}",
+                        text = "${attemptDetails.duration}s",
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold
                     )
@@ -368,7 +368,7 @@ fun AttemptReviewScreenPreview() {
     val attempt = TestAttempt(
         testAttemptId = json.getInt("testAttemptId"),
         testName = json.getString("testName"),
-        testId = json.getInt("testId"),
+//        testId = json.getInt("testId"),
         studentId = json.getInt("studentId"),
         studentName = json.getString("studentName"),
         status = AttemptStatus.COMPLETED,

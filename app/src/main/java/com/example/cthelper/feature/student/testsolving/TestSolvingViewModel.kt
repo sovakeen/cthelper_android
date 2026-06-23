@@ -55,16 +55,17 @@ class TestSolvingViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val attempts = testSolvingRepositoryImpl.getAttempts().attempts
+                val testName = testSolvingRepositoryImpl.getTestName(testId)
 //                TODO: fix to find actual ongoing attempts
                 val activeAttempt = attempts.find {
-                    it.testId == testId && (it.status == AttemptStatus.IN_PROGRESS || it.status == AttemptStatus.PAUSED)
+                    it.testName == testName && (it.status == AttemptStatus.IN_PROGRESS || it.status == AttemptStatus.PAUSED)
                 }
 
                 Log.e("INFO", "${activeAttempt}")
 
                 if (activeAttempt != null) {
                     testSolvingRepositoryImpl.cancelAttempt(activeAttempt.testAttemptId)
-                    val response = testSolvingRepositoryImpl.resumeAttempt(activeAttempt.testAttemptId)
+                    val response = testSolvingRepositoryImpl.startAttempt(testId)
                     _uiState.value = TestSolvingUiState.Success(
                         testId,
                         response.attemptId,

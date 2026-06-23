@@ -15,7 +15,7 @@ interface TestApiService {
         @Body request: TestsListRequest
     ): Response<TestsListResponse>
 
-    @GET("/tests/{testId}/details")
+    @GET("/tests/{testId}/preview")
     suspend fun testDetails(
         @Path("testId") testId: Int
     ): Response<Test>
