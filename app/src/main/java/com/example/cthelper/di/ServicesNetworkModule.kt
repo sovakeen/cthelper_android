@@ -1,6 +1,7 @@
 package com.example.cthelper.di
 
 import com.example.cthelper.network.api.AuthApiService
+import com.example.cthelper.network.api.StatisticsApiService
 import com.example.cthelper.network.api.TestApiService
 import com.example.cthelper.network.api.TestAttemptApiService
 import dagger.Module
@@ -29,5 +30,11 @@ object ServicesNetworkModule {
     @Singleton
     fun provideTestApiService(retrofit: Retrofit): TestApiService {
         return retrofit.create(TestApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideStatisticsApiService(retrofit: Retrofit): StatisticsApiService {
+        return retrofit.create(StatisticsApiService::class.java)
     }
 }

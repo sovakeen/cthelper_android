@@ -37,6 +37,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 fun TestsListScreen(
     navigateToTestSolving: (Int) -> Unit,
     navigateToAttemptsList: () -> Unit = {},
+    navigateToStats: () -> Unit = {},
     onLogout: () -> Unit = {},
     viewModel: TestsListViewModel = hiltViewModel()
 ) {
@@ -77,7 +78,7 @@ fun TestsListScreen(
                                 )
                                 DropdownMenuItem(
                                     text = { Text("Statistics") },
-                                    onClick = {  }
+                                    onClick = { navigateToStats() }
                                 )
                                 DropdownMenuItem(
                                     text = { Text("Teachers") },

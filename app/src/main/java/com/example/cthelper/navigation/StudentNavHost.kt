@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.cthelper.feature.student.attemptreview.AttemptReviewScreen
 import com.example.cthelper.feature.student.attemptslist.AttemptsListScreen
+import com.example.cthelper.feature.student.statistics.StatsScreen
 import com.example.cthelper.feature.student.testslist.TestsListScreen
 import com.example.cthelper.feature.student.testsolving.TestSolvingScreen
 
@@ -20,6 +21,7 @@ fun StudentNavHost(onLogout: () -> Unit) {
             TestsListScreen(
                 navigateToTestSolving = { testId -> navController.navigate("${StudentDestinations.TEST_SOLVING.label}/$testId") },
                 navigateToAttemptsList = { navController.navigate(StudentDestinations.ATTEMPTS_LIST.label) },
+                navigateToStats = { navController.navigate(StudentDestinations.STATS.label) },
                 onLogout = { onLogout() }
             )
         }
@@ -50,6 +52,14 @@ fun StudentNavHost(onLogout: () -> Unit) {
                 navigateToTestsList = { navController.navigate(StudentDestinations.TESTS_LIST.label) }
             )
         }
+
+        composable(
+            route = "${StudentDestinations.STATS.label}"
+        ) {
+            StatsScreen(
+//                navigateToTestsList = { navController.navigate(StudentDestinations.TESTS_LIST.label) }
+            )
+        }
     }
 }
 
@@ -59,5 +69,6 @@ enum class StudentDestinations(
     TESTS_LIST("tests_list"),
     TEST_SOLVING("test_solving"),
     ATTEMPTS_LIST("attempts_list"),
-    ATTEMPT_REVIEW("attempt_review")
+    ATTEMPT_REVIEW("attempt_review"),
+    STATS("statistics")
 }
