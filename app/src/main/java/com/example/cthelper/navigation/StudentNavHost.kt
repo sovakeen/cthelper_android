@@ -40,7 +40,9 @@ fun StudentNavHost(onLogout: () -> Unit) {
         ) {
             AttemptsListScreen(
                 navigateToTestsList = { navController.navigate(StudentDestinations.TESTS_LIST.label) },
-                navigateToReview = { attemptId -> navController.navigate("${StudentDestinations.ATTEMPT_REVIEW.label}/$attemptId") }
+                navigateToReview = { attemptId -> navController.navigate("${StudentDestinations.ATTEMPT_REVIEW.label}/$attemptId") },
+                navigateToStats = { navController.navigate(StudentDestinations.STATS.label) },
+                onLogout = { onLogout() }
             )
         }
 
@@ -57,7 +59,9 @@ fun StudentNavHost(onLogout: () -> Unit) {
             route = "${StudentDestinations.STATS.label}"
         ) {
             StatsScreen(
-//                navigateToTestsList = { navController.navigate(StudentDestinations.TESTS_LIST.label) }
+                navigateToTestsList = { navController.navigate(StudentDestinations.TESTS_LIST.label) },
+                navigateToAttemptsList = { navController.navigate(StudentDestinations.ATTEMPTS_LIST.label) },
+                onLogout = { onLogout() }
             )
         }
     }

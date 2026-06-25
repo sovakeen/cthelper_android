@@ -2,6 +2,7 @@ package com.example.cthelper.feature.student.attemptslist
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -10,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -35,6 +37,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 fun AttemptsListScreen(
     navigateToReview: (Int) -> Unit = {},
     navigateToTestsList: () -> Unit = {},
+    navigateToStats: () -> Unit = {},
+    onLogout: () -> Unit = {},
     viewModel: AttemptsListViewModel = hiltViewModel()
 ) {
     var menuExpanded by remember { mutableStateOf(false) }
@@ -43,9 +47,9 @@ fun AttemptsListScreen(
         topBar = {
             Column {
                 TopAppBar(
-                    title = { Text("Attempts history") },
+                    title = { Text("Test Attempts") },
                     actions = {
-                        Box {
+                        Row {
                             IconButton(onClick = { menuExpanded = true }) {
                                 Icon(
                                     imageVector = Icons.Default.MoreVert,
@@ -61,6 +65,25 @@ fun AttemptsListScreen(
                                     onClick = {
                                         menuExpanded = false
                                         navigateToTestsList()
+                                    }
+                                )
+                                DropdownMenuItem(
+                                    text = { Text("Statistics") },
+                                    onClick = { navigateToStats() }
+                                )
+                                DropdownMenuItem(
+                                    text = { Text("Teachers") },
+                                    onClick = {  }
+                                )
+                                DropdownMenuItem(
+                                    text = { Text("Profile") },
+                                    onClick = {  }
+                                )
+                                DropdownMenuItem(
+                                    text = { Text("Log out") },
+                                    onClick = {
+                                        menuExpanded = false
+                                        onLogout()
                                     }
                                 )
                             }
